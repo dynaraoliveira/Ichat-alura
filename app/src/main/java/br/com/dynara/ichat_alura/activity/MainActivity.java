@@ -1,5 +1,6 @@
 package br.com.dynara.ichat_alura.activity;
 
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -18,7 +19,10 @@ import br.com.dynara.ichat_alura.service.ChatService;
 
 public class MainActivity extends AppCompatActivity {
 
+    private ListView listaDeMensagens;
     private List<Mensagem> mensagens;
+    private ChatService chatService;
+
     private int idDoCliente = 1;
     private EditText editText;
     private Button button;
@@ -28,21 +32,32 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ListView listaDeMensagens = (ListView) findViewById(R.id.main_lista);
-        mensagens = Arrays.asList(new Mensagem(1,"ola alunos de android"), new Mensagem(2, "oi"));
+        listaDeMensagens = (ListView) findViewById(R.id.main_lista);
+        mensagens = new ArrayList<>();
         MensagemAdapter mensagemAdapter = new MensagemAdapter(mensagens, this, idDoCliente);
         listaDeMensagens.setAdapter(mensagemAdapter);
 
         editText = (EditText) findViewById(R.id.main_texto);
+
+        chatService = new ChatService(this);
+        chatService.receberMensagens();
 
         button = (Button) findViewById(R.id.main_botao);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new ChatService().enviar(new Mensagem(idDoCliente, editText.getText().toString()));
+                chatService.enviar(new Mensagem(idDoCliente, editText.getText().toString()));
             }
         });
 
+    }
+
+    public void colocaNaLista(Mensagem mensagem) {
+        mensagens.add(mensagem);
+
+        MensagemAdapter mensagemAdapter = new MensagemAdapter(mensagens, this, idDoCliente);
+        listaDeMensagens.setAdapter(mensagemAdapter);
+        chatService.receberMensagens();
     }
 }
