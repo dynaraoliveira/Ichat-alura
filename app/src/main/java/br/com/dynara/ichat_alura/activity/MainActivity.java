@@ -1,6 +1,5 @@
 package br.com.dynara.ichat_alura.activity;
 
-import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -9,7 +8,6 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import br.com.dynara.ichat_alura.R;
@@ -40,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         editText = (EditText) findViewById(R.id.main_texto);
 
         chatService = new ChatService(this);
-        chatService.receberMensagens();
+        //chatService.receberMensagens();
 
         button = (Button) findViewById(R.id.main_botao);
 

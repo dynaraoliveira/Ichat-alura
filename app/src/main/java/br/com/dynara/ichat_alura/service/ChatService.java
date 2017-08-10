@@ -34,7 +34,7 @@ public class ChatService {
                 try {
                     HttpURLConnection httpConnection = (HttpURLConnection) new URL("http://192.168.1.117:8080/polling").openConnection();
                     httpConnection.setRequestMethod("POST");
-                    httpConnection.setRequestProperty("context-type", "application/json");
+                    httpConnection.setRequestProperty("Content-type", "application/json");
 
                     JSONStringer json = new JSONStringer()
                             .object()
@@ -68,10 +68,11 @@ public class ChatService {
                     HttpURLConnection httpConnection = (HttpURLConnection) new URL("http://192.168.1.117:8080/polling").openConnection();
                     httpConnection.setRequestMethod("GET");
                     httpConnection.setRequestProperty("Accept", "application/json");
-
                     httpConnection.connect();
+
                     Scanner scanner = new Scanner(httpConnection.getInputStream());
                     StringBuilder builder = new StringBuilder();
+
                     while (scanner.hasNextLine()) {
                         builder.append(scanner.nextLine());
                     }
