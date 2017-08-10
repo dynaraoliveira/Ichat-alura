@@ -12,8 +12,12 @@ import java.util.List;
 
 import br.com.dynara.ichat_alura.R;
 import br.com.dynara.ichat_alura.adapter.MensagemAdapter;
+import br.com.dynara.ichat_alura.callback.OuvirMensagensCallback;
 import br.com.dynara.ichat_alura.modelo.Mensagem;
 import br.com.dynara.ichat_alura.service.ChatService;
+import retrofit2.Call;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -37,8 +41,14 @@ public class MainActivity extends AppCompatActivity {
 
         editText = (EditText) findViewById(R.id.main_texto);
 
-        chatService = new ChatService(this);
-        //chatService.receberMensagens();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://192.168.0.85:8080/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        chatService = retrofit.create(ChatService.class);
+
+        ouvirMensagens();
 
         button = (Button) findViewById(R.id.main_botao);
 
@@ -57,5 +67,10 @@ public class MainActivity extends AppCompatActivity {
         MensagemAdapter mensagemAdapter = new MensagemAdapter(mensagens, this, idDoCliente);
         listaDeMensagens.setAdapter(mensagemAdapter);
         chatService.receberMensagens();
+    }
+
+    public void ouvirMensagens() {
+        Call<Mensagem> call = chatService.receberMensagens();
+        call.enqueue(new OuvirMensagensCallback(this));
     }
 }
