@@ -12,6 +12,7 @@ import java.util.List;
 
 import br.com.dynara.ichat_alura.R;
 import br.com.dynara.ichat_alura.adapter.MensagemAdapter;
+import br.com.dynara.ichat_alura.callback.EnviarMensagemCallback;
 import br.com.dynara.ichat_alura.callback.OuvirMensagensCallback;
 import br.com.dynara.ichat_alura.modelo.Mensagem;
 import br.com.dynara.ichat_alura.service.ChatService;
@@ -55,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                chatService.enviar(new Mensagem(idDoCliente, editText.getText().toString()));
+                chatService.enviar(new Mensagem(idDoCliente, editText.getText().toString())).enqueue(new EnviarMensagemCallback());
             }
         });
 

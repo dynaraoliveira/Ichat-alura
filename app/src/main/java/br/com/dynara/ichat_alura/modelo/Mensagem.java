@@ -1,11 +1,14 @@
 package br.com.dynara.ichat_alura.modelo;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by Dynara on 04/08/2017.
  */
 
 public class Mensagem {
 
+    @SerializedName("text")
     private String texto;
     private int id;
 
