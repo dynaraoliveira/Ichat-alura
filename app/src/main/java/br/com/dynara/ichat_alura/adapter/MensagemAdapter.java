@@ -55,7 +55,7 @@ public class MensagemAdapter extends BaseAdapter {
         Mensagem mensagem = getItem(position);
 
         if (this.idDoCliente != mensagem.getId()) {
-            texto.setBackgroundColor(Color.CYAN);
+            view.setBackgroundColor(Color.CYAN);
         }
 
         texto.setText(mensagem.getTexto());
